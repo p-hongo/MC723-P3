@@ -2,10 +2,10 @@
 # TLM memory with TLM interface (ArchC 2x compliant)
 # ####################################################
 
-TARGET=ac_tlm_mem
+TARGET=router
 INC_DIR := -I. -I$(ARCHC_PATH)/include/archc -I$(SYSTEMC)/include -I$(TLM_PATH) 
 
-SRCS := ac_tlm_mem.cpp
+SRCS := router.cpp
 OBJS := $(SRCS:.cpp=.o)
 
 #------------------------------------------------------
@@ -16,7 +16,7 @@ OBJS := $(SRCS:.cpp=.o)
 lib: all
 	ar r lib$(TARGET).a $(OBJS)
 #------------------------------------------------------
-all: $(OBJS) ac_tlm_mem.h
+all: $(OBJS) router.h
 #------------------------------------------------------
 clean:
 	rm -f $(OBJS) *~ *.o *.a
