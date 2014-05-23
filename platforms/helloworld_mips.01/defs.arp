@@ -1,5 +1,5 @@
 IP := ac_tlm_mem
-IS := router
+IS := bus
 PROCESSOR := mips1
 SW := hello_world
 WRAPPER := 

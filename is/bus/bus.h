@@ -1,5 +1,5 @@
 /**
- * @file      router.h
+ * @file      bus.h
  * @author    Bruno de Carvalho Albertini
  *
  * @author    The ArchC Team
@@ -31,8 +31,8 @@
 
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef router_H_
-#define router_H_
+#ifndef bus_H_
+#define bus_H_
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -57,7 +57,7 @@ namespace user
 {
 
   /// A TLM memory
-  class router :
+  class bus :
     public sc_module,
     public ac_tlm_transport_if // Using ArchC TLM protocol
   {
@@ -85,12 +85,12 @@ namespace user
        * @param k Memory size in kilowords.
        *
        */
-      router( sc_module_name module_name);
+      bus( sc_module_name module_name);
 
       /**
        * Default destructor.
        */
-      ~router();
+      ~bus();
 
     private:
 
@@ -98,4 +98,4 @@ namespace user
 
 };
 
-#endif //router_H_
+#endif //bus_H_

@@ -22,10 +22,10 @@ const char *archc_options="-abi -dy ";
 #include  <systemc.h>
 #include  "mips1.H"
 #include  "ac_tlm_mem.h"
-#include  "router.h"
+#include  "bus.h"
 
 using user::ac_tlm_mem;
-using user::router;
+using user::bus;
 
 int sc_main(int ac, char *av[])
 {
@@ -34,16 +34,17 @@ int sc_main(int ac, char *av[])
   mips1 mips1_proc1("mips1");
   mips1 mips1_proc2("mips2");
   ac_tlm_mem mem("mem");
-  router rout("router");
+  bus membus("bus");
 
 #ifdef AC_DEBUG
   ac_trace("mips1_proc1.trace");
   ac_trace("mips1_proc2.trace");
 #endif 
 
-  mips1_proc1.DM_port(rout.target_export[0]);
+
+  mips1_proc1.DM_port(membus.target_export[0]);
   mips1_proc2.DM_port(rout.target_export[1]);
-  rout.DM_port(mem.target_export);
+  membus.DM_port(mem.target_export);
 
   mips1_proc1.init(ac, av);
   cerr << endl;
