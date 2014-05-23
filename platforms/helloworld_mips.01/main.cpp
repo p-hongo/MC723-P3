@@ -32,27 +32,39 @@ int sc_main(int ac, char *av[])
 
   //!  ISA simulator
   mips1 mips1_proc1("mips1");
+  mips1 mips1_proc2("mips2");
   ac_tlm_mem mem("mem");
   router rout("router");
 
 #ifdef AC_DEBUG
   ac_trace("mips1_proc1.trace");
+  ac_trace("mips1_proc2.trace");
 #endif 
 
   mips1_proc1.DM_port(rout.target_export[0]);
+  mips1_proc2.DM_port(rout.target_export[1]);
   rout.DM_port(mem.target_export);
 
   mips1_proc1.init(ac, av);
   cerr << endl;
+
+  mips1_proc2.init(ac, av);
+  cerr << endl
 
   sc_start();
 
   mips1_proc1.PrintStat();
   cerr << endl;
 
+  mips1_proc2.PrintStat();
+  cerr << endl;
+
 #ifdef AC_STATS
   mips1_proc1.ac_sim_stats.time = sc_simulation_time();
   mips1_proc1.ac_sim_stats.print();
+
+  mips1_proc2.ac_sim_stats.time = sc_simulation_time();
+  mips1_proc2.ac_sim_stats.print();
 #endif 
 
 #ifdef AC_DEBUG
