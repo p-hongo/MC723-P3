@@ -1,5 +1,5 @@
 /**
- * @file      router.cpp
+ * @file      bus.cpp
  * @author    Bruno de Carvalho Albertini
  *
  * @author    The ArchC Team
@@ -34,15 +34,15 @@
 // SystemC includes
 // ArchC includes
 
-#include "router.h"
+#include "bus.h"
 
 //////////////////////////////////////////////////////////////////////////////
 
 /// Namespace to isolate memory from ArchC
-using user::router;
+using user::bus;
 
 /// Constructor
-router::router( sc_module_name module_name) :
+bus::bus( sc_module_name module_name) :
   sc_module( module_name ),
   DM_port("DM_port", 5242880U)
 {
@@ -55,7 +55,7 @@ router::router( sc_module_name module_name) :
 }
 
 /// Destructor
-router::~router() {
+bus::~bus() {
 
 }
 
