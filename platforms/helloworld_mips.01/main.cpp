@@ -39,7 +39,7 @@ int sc_main(int ac, char *av[])
   ac_trace("mips1_proc1.trace");
 #endif 
 
-  mips1_proc1.DM_port(rout.target_export);
+  mips1_proc1.DM_port(rout.target_export[0]);
   rout.DM_port(mem.target_export);
 
   mips1_proc1.init(ac, av);

@@ -44,11 +44,12 @@ using user::router;
 /// Constructor
 router::router( sc_module_name module_name) :
   sc_module( module_name ),
-  DM_port("DM_port", 5242880U),
-  target_export("iport")
+  DM_port("DM_port", 5242880U)
 {
     /// Binds target_export to the memory
-    target_export( *this );
+	for (int i=0; i<8; i++) {
+    target_export[i]( *this );
+}
 
 
 }
