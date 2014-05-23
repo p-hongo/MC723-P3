@@ -22,8 +22,10 @@ const char *archc_options="-abi -dy ";
 #include  <systemc.h>
 #include  "mips1.H"
 #include  "ac_tlm_mem.h"
+#include  "router.h"
 
 using user::ac_tlm_mem;
+using user::router;
 
 int sc_main(int ac, char *av[])
 {
@@ -31,12 +33,14 @@ int sc_main(int ac, char *av[])
   //!  ISA simulator
   mips1 mips1_proc1("mips1");
   ac_tlm_mem mem("mem");
+  router rout("router");
 
 #ifdef AC_DEBUG
   ac_trace("mips1_proc1.trace");
 #endif 
 
-  mips1_proc1.DM_port(mem.target_export);
+  mips1_proc1.DM_port(rout.target_export);
+  rout.DM_port(mem.target_export);
 
   mips1_proc1.init(ac, av);
   cerr << endl;

@@ -44,6 +44,7 @@ using user::router;
 /// Constructor
 router::router( sc_module_name module_name) :
   sc_module( module_name ),
+  DM_port("DM_port", 5242880U),
   target_export("iport")
 {
     /// Binds target_export to the memory

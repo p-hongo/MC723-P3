@@ -41,6 +41,7 @@
 #include <systemc>
 // ArchC includes
 #include "ac_tlm_protocol.H"
+#include  "ac_tlm_port.H"
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -63,6 +64,8 @@ class router :
 public:
   /// Exposed port with ArchC interface
   sc_export< ac_tlm_transport_if > target_export;
+
+  ac_tlm_port DM_port;
 
   /**
    * Implementation of TLM transport method that
