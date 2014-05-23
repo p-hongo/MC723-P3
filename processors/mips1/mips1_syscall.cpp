@@ -53,8 +53,8 @@ void mips1_syscall::set_buffer(int argn, unsigned char* buf, unsigned int size)
 {
   unsigned int addr = RB[4+argn];
 
-//  for (unsigned int i = 0; i<size; i++, addr++) {
-//    DM.write_byte(addr, buf[i]);
+  //  for (unsigned int i = 0; i<size; i++, addr++) {
+  //    DM.write_byte(addr, buf[i]);
   for (unsigned int i = 0; i<size; i+=4, addr+=4) {
     DM.write(addr, convert_endian(4, *(unsigned int *) &buf[i], false));
   }

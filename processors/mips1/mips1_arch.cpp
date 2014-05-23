@@ -11,7 +11,7 @@
  * IC-UNICAMP                                         *
  * http://www.lsc.ic.unicamp.br                       *
  ******************************************************/
- 
+
 
 #include "mips1_arch.H"
 
@@ -25,11 +25,11 @@ mips1_arch::mips1_arch() :
   hi("hi", 0),
   lo("lo", 0) {
 
-  ac_mt_endian = mips1_parms::AC_MATCH_ENDIAN;
-  ac_tgt_endian = mips1_parms::AC_PROC_ENDIAN;
+    ac_mt_endian = mips1_parms::AC_MATCH_ENDIAN;
+    ac_tgt_endian = mips1_parms::AC_PROC_ENDIAN;
 
-  IM = &DM;
-  APP_MEM = &DM;
+    IM = &DM;
+    APP_MEM = &DM;
 
-}
+  }
 

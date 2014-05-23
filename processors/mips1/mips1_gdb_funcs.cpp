@@ -41,7 +41,7 @@
 using namespace mips1_parms;
 
 int mips1::nRegs(void) {
-   return 73;
+  return 73;
 }
 
 
@@ -69,15 +69,15 @@ void mips1::reg_write( int reg, ac_word value ) {
   if ( ( reg >= 0 ) && ( reg < 32 ) )
     RB.write( reg, value );
   else
-    {
-      /* lo, hi */
-      if ( ( reg >= 33 ) && ( reg < 35 ) )
-        RB.write( reg - 1, value );
-      else
-        /* pc */
-        if ( reg == 37 )
-          ac_pc = value;
-    }
+  {
+    /* lo, hi */
+    if ( ( reg >= 33 ) && ( reg < 35 ) )
+      RB.write( reg - 1, value );
+    else
+      /* pc */
+      if ( reg == 37 )
+        ac_pc = value;
+  }
 }
 
 

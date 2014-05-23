@@ -62,12 +62,12 @@ void ac_behavior( instruction )
   npc = ac_pc + 4;
 #endif 
 };
- 
+
 //! Instruction Format behavior methods.
 void ac_behavior( Type_R ){}
 void ac_behavior( Type_I ){}
 void ac_behavior( Type_J ){}
- 
+
 //!Behavior called before starting simulation
 void ac_behavior(begin)
 {
@@ -236,7 +236,7 @@ void ac_behavior( addi )
   dbg_printf("Result = %#x\n", RB[rt]);
   //Test overflow
   if ( ((RB[rs] & 0x80000000) == (imm & 0x80000000)) &&
-       ((imm & 0x80000000) != (RB[rt] & 0x80000000)) ) {
+      ((imm & 0x80000000) != (RB[rt] & 0x80000000)) ) {
     fprintf(stderr, "EXCEPTION(addi): integer overflow.\n"); exit(EXIT_FAILURE);
   }
 };
@@ -318,7 +318,7 @@ void ac_behavior( add )
   dbg_printf("Result = %#x\n", RB[rd]);
   //Test overflow
   if ( ((RB[rs] & 0x80000000) == (RB[rd] & 0x80000000)) &&
-       ((RB[rd] & 0x80000000) != (RB[rt] & 0x80000000)) ) {
+      ((RB[rd] & 0x80000000) != (RB[rt] & 0x80000000)) ) {
     fprintf(stderr, "EXCEPTION(add): integer overflow.\n"); exit(EXIT_FAILURE);
   }
 };
@@ -577,12 +577,12 @@ void ac_behavior( jal )
   // jump to the address given by PC(31...28)||(addr<<2)
   // It must also flush the instructions that were loaded into the pipeline
   RB[Ra] = ac_pc+4; //ac_pc is pc+4, we need pc+8
-	
+
   addr = addr << 2;
 #ifndef NO_NEED_PC_UPDATE
   npc = (ac_pc & 0xF0000000) | addr;
 #endif 
-	
+
   dbg_printf("Target = %#x\n", (ac_pc & 0xF0000000) | addr );
   dbg_printf("Return = %#x\n", ac_pc+4);
 };
