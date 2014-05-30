@@ -44,7 +44,8 @@ using user::bus;
 /// Constructor
 bus::bus( sc_module_name module_name) :
   sc_module( module_name ),
-  DM_port("DM_port", 5242880U)
+  DM_port("DM_port", 5242880U),
+  supervisor_port("supervisor_port", 5242881U)
 {
   /// Binds target_export to the memory
   for (int i=0; i<8; i++) {

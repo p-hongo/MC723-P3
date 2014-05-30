@@ -55,7 +55,7 @@ using namespace mips1_parms;
 //!Generic instruction behavior method.
 void ac_behavior( instruction )
 { 
-  if (ac_wait_sig) {
+  while (ac_wait_sig) {
      wait(1,SC_NS);
   }
   dbg_printf("----- PC=%#x ----- %lld\n", (int) ac_pc, ac_instr_counter);

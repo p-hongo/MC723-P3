@@ -5,7 +5,9 @@ int main(int argc, char *argv[]){
   for(i=0;i<10;i++)
     printf("Hi from processor MIPS!\n");
 
-  exit(0); // To avoid cross-compiler exit routine
+  //exit(0); // To avoid cross-compiler exit routine
+  int* sup = 5242880;
+  (*sup) = 0;
   return 0; // Never executed, just for compatibility
 }
 

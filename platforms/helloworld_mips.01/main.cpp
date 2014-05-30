@@ -23,9 +23,11 @@ const char *archc_options="-abi -dy ";
 #include  "mips1.H"
 #include  "ac_tlm_mem.h"
 #include  "bus.h"
+#include  "supervisor.h"
 
 using user::ac_tlm_mem;
 using user::bus;
+using user::supervisor;
 
 int sc_main(int ac, char *av[])
 {
@@ -35,6 +37,7 @@ int sc_main(int ac, char *av[])
   mips1 mips1_proc2("mips2");
   ac_tlm_mem mem("mem");
   bus membus("bus");
+  supervisor visor("supervisor");
 
 #ifdef AC_DEBUG
   ac_trace("mips1_proc1.trace");
@@ -44,6 +47,7 @@ int sc_main(int ac, char *av[])
   mips1_proc1.DM_port(membus.target_export[0]);
   mips1_proc2.DM_port(membus.target_export[1]);
   membus.DM_port(mem.target_export);
+  membus.supervisor_port(visor);
 
   char av1[128];
   strcpy(av1, av[1]);
