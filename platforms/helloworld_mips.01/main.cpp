@@ -32,53 +32,46 @@ int sc_main(int ac, char *av[])
 
   //!  ISA simulator
   mips1 mips1_proc1("mips1");
-  //mips1 mips1_proc2("mips2");
+  mips1 mips1_proc2("mips2");
   ac_tlm_mem mem("mem");
   bus membus("bus");
 
 #ifdef AC_DEBUG
   ac_trace("mips1_proc1.trace");
-  //ac_trace("mips1_proc2.trace");
+  ac_trace("mips1_proc2.trace");
 #endif 
 
-  for (int i = 0; i<ac; i++) {
-    printf("AV%d = %s\n", i, av[i]);
-  }
-
   mips1_proc1.DM_port(membus.target_export[0]);
-  //mips1_proc2.DM_port(membus.target_export[1]);
+  mips1_proc2.DM_port(membus.target_export[1]);
   membus.DM_port(mem.target_export);
 
-  char aux[100];
-  strcpy(aux, av[1]);
+  char av1[128];
+  strcpy(av1, av[1]);
 
   mips1_proc1.init(ac, av);
   cerr << endl;
 
+  strcpy(av[1],av1);
 
-  strcpy(av[1],aux);
-
-
-  for (int i = 0; i<ac; i++) {
-    printf("AV%d = %s\n", i, av[i]);
-  }
-  //mips1_proc2.init(ac, av);
+  mips1_proc2.init(ac, av);
+  mips1_proc2.ac_stop_flag = 1;
+  mips1_proc2.ac_wait_sig = 0;
   cerr << endl;
 
   sc_start();
 
-  //mips1_proc1.PrintStat();
+  mips1_proc1.PrintStat();
   cerr << endl;
 
-  //mips1_proc2.PrintStat();
+  mips1_proc2.PrintStat();
   cerr << endl;
 
 #ifdef AC_STATS
   mips1_proc1.ac_sim_stats.time = sc_simulation_time();
   mips1_proc1.ac_sim_stats.print();
 
-  //mips1_proc2.ac_sim_stats.time = sc_simulation_time();
-  //mips1_proc2.ac_sim_stats.print();
+  mips1_proc2.ac_sim_stats.time = sc_simulation_time();
+  mips1_proc2.ac_sim_stats.print();
 #endif 
 
 #ifdef AC_DEBUG
