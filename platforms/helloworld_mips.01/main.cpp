@@ -54,8 +54,7 @@ int sc_main(int ac, char *av[])
   strcpy(av[1],av1);
 
   mips1_proc2.init(ac, av);
-  mips1_proc2.ac_stop_flag = 1;
-  mips1_proc2.ac_wait_sig = 0;
+  mips1_proc2.ac_wait_sig = 1;
   cerr << endl;
 
   sc_start();
