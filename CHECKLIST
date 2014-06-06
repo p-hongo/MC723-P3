@@ -1,0 +1,21 @@
+
+
+1)Barramento (roteador)
+
+2)Multicore
+
+	2.1)Pilha
+	2.2)Parametros
+	2.3)
+3)Boot
+	3.1) Subir um único core
+	3.2) Ativar outro core
+	3.3) Controlar a ativação do outro core
+
+4)Controle de concorrência
+	4.1)Periférico
+
+5)Offloading
+	5.1) Selecionar cõdigo
+	5.2) Criar periférico
+	5.3) SW
