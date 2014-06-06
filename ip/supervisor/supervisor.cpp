@@ -9,8 +9,9 @@ supervisor::supervisor( sc_module_name module_name, int size) :
   target_export("iport")
 {
   num_processors = 0;
+
   /// Initialize memory vector
-  int k = 128;
+  int k = 4;
   memory = new int[ k ];
   for(k=k-1;k>0;k--) memory[k]=0;
   target_export( *this );
@@ -35,24 +36,34 @@ void supervisor::addProcessor (mips1* processor) {
 
 ac_tlm_rsp_status supervisor::writem( const uint32_t &a , const uint32_t &d )
 {
-  uint32_t actualAddress = a-5242880;
+  int actualAddress = (a-5242880)/4;
 
-  int proc = be32toh(d);
+  int val = be32toh(d);
 
-  if (actualAddress >= 0) {
-    if(proc < num_processors) {
-      processorList[proc]->ac_wait_sig = 0;
+  if (actualAddress < 0) return SUCCESS;
+
+  if (actualAddress == 0) {
+    if(val < num_processors) {
+      processorList[val]->ac_wait_sig = 0;
     }
+  } else if (actualAddress < 4) {
+    memory[actualAddress] = val;
   }
   return SUCCESS;
 }
 
 ac_tlm_rsp_status supervisor::readm( const uint32_t &a , uint32_t &d )
 {
-  uint32_t actualAddress = a-5242880;
-  if (actualAddress == 4) {
-    *((uint32_t *) &d) = (uint32_t) htobe32(memory[actualAddress]);
+  int actualAddress = (a-5242880)/4;
 
+  *((uint32_t *) &d) = (uint32_t) htobe32(memory[actualAddress]);
+
+  // PROC COUNT & MUTEX
+  // ANY ADDRESS OVER 0 INCREASES ON READ
+  // ONLY FIRST GET 0 -> MUTEX
+  // WRITE 0 TO UNLOCK
+  // EVERYONE ELSE GETS A DIFFERENT (INCREASING) NUMBER
+  if (actualAddress > 0) {
     memory[actualAddress]++;
   }
   return SUCCESS;
