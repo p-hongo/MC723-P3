@@ -42,12 +42,13 @@
 using user::bus;
 
 /// Constructor
-bus::bus( sc_module_name module_name) :
+bus::bus( sc_module_name module_name, int size) :
   sc_module( module_name ),
   DM_port("DM_port", 5242880U),
   supervisor_port("supervisor_port", 5242881U),
   offload_port("offload_port", 5242882U)
 {
+  target_export = new sc_export< ac_tlm_transport_if >[size];
   /// Binds target_export to the memory
   for (int i=0; i<8; i++) {
     target_export[i]( *this );
@@ -58,7 +59,7 @@ bus::bus( sc_module_name module_name) :
 
 /// Destructor
 bus::~bus() {
-
+  delete [] target_export;
 }
 
 

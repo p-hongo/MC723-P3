@@ -10,11 +10,14 @@
 #include <systemc>
 // ArchC includes
 #include "ac_tlm_protocol.H"
-#include  "ac_tlm_port.H"
+#include "ac_tlm_port.H"
+#include "../../processors/mips1/mips1.H"
 
 //////////////////////////////////////////////////////////////////////////////
 
 //#define DEBUG
+
+typedef mips1* mips1_p;
 
 /// Namespace to isolate memory from ArchC
 namespace user
@@ -68,11 +71,17 @@ namespace user
 
 
 
-      supervisor( sc_module_name module_name);
+      supervisor( sc_module_name module_name, int size);
 
       ~supervisor();
 
+      void addProcessor (mips1* processor);
+
     private:
+      int *memory;
+      mips1_p* processorList;
+      int num_processors;
+
 
   };
 
