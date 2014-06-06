@@ -1,13 +1,18 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]){
-  int i;
-  for(i=0;i<10;i++)
-    printf("Hi from processor MIPS!\n");
+
+  int* startPos = 5242880;
+  int* idPos = 5242884;
+
+  // Get this proc id
+  unsigned int thisProc = (*idPos);
+  printf("Hi from processor MIPS %u!\n", thisProc);
+
+  // Start other proc
+  (*startPos) = thisProc+1;
 
   //exit(0); // To avoid cross-compiler exit routine
-  int* sup = 5242880;
-  (*sup) = 0;
   return 0; // Never executed, just for compatibility
 }
 

@@ -34,22 +34,46 @@ int sc_main(int ac, char *av[])
 
   int num_processors = 8;
 
+  mips1_p* processorList;
+  processorList = new mips1_p[num_processors];
+
   //!  ISA simulator
   mips1 mips1_proc1("mips1");
   mips1 mips1_proc2("mips2");
+  mips1 mips1_proc3("mips3");
+  mips1 mips1_proc4("mips4");
+  mips1 mips1_proc5("mips5");
+  mips1 mips1_proc6("mips6");
+  mips1 mips1_proc7("mips7");
+  mips1 mips1_proc8("mips8");
+
+  processorList[0] = &mips1_proc1;
+  processorList[1] = &mips1_proc2;
+  processorList[2] = &mips1_proc3;
+  processorList[3] = &mips1_proc4;
+  processorList[4] = &mips1_proc5;
+  processorList[5] = &mips1_proc6;
+  processorList[6] = &mips1_proc7;
+  processorList[7] = &mips1_proc8;
+
   ac_tlm_mem mem("mem");
   bus membus("bus",num_processors);
+
   supervisor visor("supervisor", num_processors);
-  visor.addProcessor(&mips1_proc1);
-  visor.addProcessor(&mips1_proc2);
+  for (int i=0; i<num_processors; i++) {
+    visor.addProcessor(processorList[i]);
+  }
 
 #ifdef AC_DEBUG
   ac_trace("mips1_proc1.trace");
   ac_trace("mips1_proc2.trace");
 #endif 
 
-  mips1_proc1.DM_port(membus.target_export[0]);
-  mips1_proc2.DM_port(membus.target_export[1]);
+
+  for (int i=0; i<num_processors; i++) {
+    processorList[i]->DM_port(membus.target_export[i]);
+  }
+
   membus.DM_port(mem.target_export);
   membus.supervisor_port(visor);
 
@@ -61,9 +85,12 @@ int sc_main(int ac, char *av[])
 
   strcpy(av[1],av1);
 
-  mips1_proc2.init(ac, av);
-  mips1_proc2.ac_wait_sig = 1;
-  cerr << endl;
+  for (int i=1; i<num_processors; i++) {
+    strcpy(av[1],av1);
+    processorList[i]->init(ac, av);
+    processorList[i]->ac_wait_sig = 1;
+    cerr << endl;
+  }
 
   sc_start();
 

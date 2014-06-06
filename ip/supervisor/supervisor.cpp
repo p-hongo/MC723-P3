@@ -1,4 +1,5 @@
 #include "supervisor.h"
+#include "endian.h"
 
 using user::supervisor;
 
@@ -10,7 +11,7 @@ supervisor::supervisor( sc_module_name module_name, int size) :
   num_processors = 0;
   /// Initialize memory vector
   int k = 128;
-  memory = new uint8_t[ k ];
+  memory = new int[ k ];
   for(k=k-1;k>0;k--) memory[k]=0;
   target_export( *this );
 
@@ -35,9 +36,12 @@ void supervisor::addProcessor (mips1* processor) {
 ac_tlm_rsp_status supervisor::writem( const uint32_t &a , const uint32_t &d )
 {
   uint32_t actualAddress = a-5242880;
+
+  int proc = be32toh(d);
+
   if (actualAddress >= 0) {
-    if(d < num_processors) {
-      processorList[d]->ac_wait_sig = 0;
+    if(proc < num_processors) {
+      processorList[proc]->ac_wait_sig = 0;
     }
   }
   return SUCCESS;
@@ -45,6 +49,12 @@ ac_tlm_rsp_status supervisor::writem( const uint32_t &a , const uint32_t &d )
 
 ac_tlm_rsp_status supervisor::readm( const uint32_t &a , uint32_t &d )
 {
+  uint32_t actualAddress = a-5242880;
+  if (actualAddress == 4) {
+    *((uint32_t *) &d) = (uint32_t) htobe32(memory[actualAddress]);
+
+    memory[actualAddress]++;
+  }
   return SUCCESS;
 }
 

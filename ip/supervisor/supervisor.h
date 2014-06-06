@@ -78,7 +78,7 @@ namespace user
       void addProcessor (mips1* processor);
 
     private:
-      uint8_t *memory;
+      int *memory;
       mips1_p* processorList;
       int num_processors;
 
