@@ -63,7 +63,7 @@ namespace user
   {
     public:
       /// Exposed port with ArchC interface
-      sc_export< ac_tlm_transport_if > target_export[8];
+      sc_export< ac_tlm_transport_if >* target_export;
 
       ac_tlm_port DM_port;
 
@@ -88,7 +88,7 @@ namespace user
        * @param k Memory size in kilowords.
        *
        */
-      bus( sc_module_name module_name);
+      bus( sc_module_name module_name, int size);
 
       /**
        * Default destructor.

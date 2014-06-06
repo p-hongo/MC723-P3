@@ -32,12 +32,16 @@ using user::supervisor;
 int sc_main(int ac, char *av[])
 {
 
+  int num_processors = 8;
+
   //!  ISA simulator
   mips1 mips1_proc1("mips1");
   mips1 mips1_proc2("mips2");
   ac_tlm_mem mem("mem");
-  bus membus("bus");
-  supervisor visor("supervisor");
+  bus membus("bus",num_processors);
+  supervisor visor("supervisor", num_processors);
+  visor.addProcessor(&mips1_proc1);
+  visor.addProcessor(&mips1_proc2);
 
 #ifdef AC_DEBUG
   ac_trace("mips1_proc1.trace");
