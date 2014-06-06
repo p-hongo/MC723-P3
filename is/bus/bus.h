@@ -69,6 +69,8 @@ namespace user
 
       ac_tlm_port supervisor_port;
 
+      ac_tlm_port offload_port;
+
       /**
        * Implementation of TLM transport method that
        * handle packets of the protocol doing apropriate actions.
@@ -77,6 +79,7 @@ namespace user
        * @return A response packet to be send
        */
       ac_tlm_rsp transport( const ac_tlm_req &request ) {
+        if(request.addr == 5242876) return offload_port->transport(request);
         if (request.addr >= 5242880) return supervisor_port->transport(request);
         return DM_port->transport(request);
       }
