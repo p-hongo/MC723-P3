@@ -25,13 +25,23 @@ offload::~offload() {
 ac_tlm_rsp_status offload::writem( const uint32_t &a , const uint32_t &d )
 {
   if (a == 5242876) {
-      int resp = 1;
-      int x = be32toh(d);
-      printf(">>%d\n", x);
-      for(int i = 1; i <=x; ++i) resp *= i;
-      //if( *((uint32_t *) &d) == 0) 
-      //printf("LOLOLOLOLOLOLOLOL\n");
-      printf("--%d\n", resp);
+      int j;
+      int global_x = be32toh(d);
+      long local_x;
+      int ans = 0;
+      printf(">>%d\n", global_x);
+
+      int LENGTH = 1;
+      for(j=0;j<LENGTH;j++){
+          // different cpu processes a certain range of bits. i.e, cpu0 processes 1~16 bits, cpu1 processes 17~32 bits 
+          local_x = global_x;
+          if(local_x){
+              do{
+                  ans++;
+              }while (0 != (local_x = local_x&(local_x-1))) ;
+          }
+      }
+      printf("--%d\n", ans);
 
   }
   return SUCCESS;

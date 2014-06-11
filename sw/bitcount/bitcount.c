@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #define LENGTH 1
-#define PROCESSORS 2
+#define PROCESSORS 8
 
 #define SVR_PROC_START_ADDR 5242880
 #define SVR_PROC_ID_ADDR 5242884
@@ -27,6 +27,9 @@ int bit_count(int myID){
     //printf(">>> %s\n", local_str);
     unsigned long global_x = strtol(local_str, NULL, 16);
     long local_x;
+    //chama periferico para offload
+    unsigned int * sup = 5242880-4;
+    (*sup) = global_x;
     for(j=0;j<LENGTH;j++){
         // different cpu processes a certain range of bits. i.e, cpu0 processes 1~16 bits, cpu1 processes 17~32 bits 
         local_x = global_x;
@@ -43,7 +46,7 @@ int main(int argc, char *argv[]){
 
     //unsigned long int inputs[LENGTH];
     int i=0, sum[PROCESSORS], terminou = 0;
-    unsigned long int n = 1234567;//atol(*++argv);*/
+    unsigned long int n = 1234567890;//atol(*++argv);*/
     
     int* startPos = (int*) SVR_PROC_START_ADDR;
     int* idPos = (int*) SVR_PROC_ID_ADDR;
@@ -62,16 +65,50 @@ int main(int argc, char *argv[]){
             sum[i] = 0;
         sum[thisProc] += bit_count(thisProc);
         printf("resposta do proc %d eh %d\n", thisProc, sum[thisProc]);
+        ++terminou;
         break;
         
     case 1:
         sum[thisProc] += bit_count(thisProc);
         printf("resposta do proc %d eh %d\n", thisProc, sum[thisProc]);
+        ++terminou;
+        break;
+    case 2:
+        sum[thisProc] += bit_count(thisProc);
+        printf("resposta do proc %d eh %d\n", thisProc, sum[thisProc]);
+        ++terminou;
+        break;
+    case 3:
+        sum[thisProc] += bit_count(thisProc);
+        printf("resposta do proc %d eh %d\n", thisProc, sum[thisProc]);
+        ++terminou;
+        break;
+    case 4:
+        sum[thisProc] += bit_count(thisProc);
+        printf("resposta do proc %d eh %d\n", thisProc, sum[thisProc]);
+        ++terminou;
+        break;
+    case 5:
+        sum[thisProc] += bit_count(thisProc);
+        printf("resposta do proc %d eh %d\n", thisProc, sum[thisProc]);
+        ++terminou;
+        break;
+    case 6:
+        sum[thisProc] += bit_count(thisProc);
+        printf("resposta do proc %d eh %d\n", thisProc, sum[thisProc]);
+        ++terminou;
+        break;
+    case 7:
+        sum[thisProc] += bit_count(thisProc);
+        printf("resposta do proc %d eh %d\n", thisProc, sum[thisProc]);
+        ++terminou;
         break;
     }    
     
-    
-    //printf("%d times %ld contains %d bit set\n", LENGTH, n, sum[0]+sum[1]);
+    /*if(thisProc == 0){
+        while(terminou < 2) printf("%d\n", terminou);
+        printf("%d times %ld contains %d bit set\n", LENGTH, n, sum[0]+sum[1]);
+        }*/
 
     // Start other proc
     (*startPos) = thisProc+1;
