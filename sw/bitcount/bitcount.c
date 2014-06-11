@@ -30,16 +30,18 @@ int bit_count(int myID){
     //chama periferico para offload
     unsigned int * sup = 5242880-4;
     (*sup) = global_x;
-    for(j=0;j<LENGTH;j++){
-        // different cpu processes a certain range of bits. i.e, cpu0 processes 1~16 bits, cpu1 processes 17~32 bits 
-        local_x = global_x;
-        if(local_x){
-            do{
-                ans++;
-            }while (0 != (local_x = local_x&(local_x-1))) ;
-        }
-    }
-    return ans;// return 1;
+    
+    //codigo que foi passado para offload
+    //  for(j=0;j<LENGTH;j++){
+    //    // different cpu processes a certain range of bits. i.e, cpu0 processes 1~16 bits, cpu1 processes 17~32 bits 
+    //    local_x = global_x;
+    //    if(local_x){
+    //        do{
+    //            ans++;
+    //        }while (0 != (local_x = local_x&(local_x-1))) ;
+    //    }
+    //  }
+    return (*sup);
 }
 
 int main(int argc, char *argv[]){

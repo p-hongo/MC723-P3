@@ -4,7 +4,7 @@
 using user::offload;
 
 /// Constructor
-offload::offload( sc_module_name module_name) :
+offload::offload( sc_module_name module_name, int k) :
   sc_module( module_name ),
   target_export("iport")
 {
@@ -29,7 +29,7 @@ ac_tlm_rsp_status offload::writem( const uint32_t &a , const uint32_t &d )
       int global_x = be32toh(d);
       long local_x;
       int ans = 0;
-      printf(">>%d\n", global_x);
+      printf("   offload>> numero a ser calculado: %d\n", global_x);
 
       int LENGTH = 1;
       for(j=0;j<LENGTH;j++){
@@ -41,14 +41,16 @@ ac_tlm_rsp_status offload::writem( const uint32_t &a , const uint32_t &d )
               }while (0 != (local_x = local_x&(local_x-1))) ;
           }
       }
-      printf("--%d\n", ans);
-
+      printf("   offload>> numero de bits: %d\n", ans);
+      ans = htobe32(ans);
+      *((uint32_t *) &memory[a]) = *((uint32_t *) &ans);     
   }
   return SUCCESS;
 }
 
 ac_tlm_rsp_status offload::readm( const uint32_t &a , uint32_t &d )
 {
-  return SUCCESS;
+    *((uint32_t *) &d) = *((uint32_t *) &memory[a]);
+    return SUCCESS;
 }
 

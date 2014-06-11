@@ -68,7 +68,7 @@ namespace user
 
 
 
-      offload( sc_module_name module_name);
+      offload( sc_module_name module_name, int k = 1);
 
       ~offload();
 
