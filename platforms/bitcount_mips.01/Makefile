@@ -4,7 +4,7 @@
 
 include defs.arp
 
-TARGET=helloworld_mips.01
+TARGET=bitcount_mips.01
 EXE = $(TARGET).x
 
 SRCS := main.cpp
@@ -15,7 +15,7 @@ OBJS := $(SRCS:.cpp=.o)
 #------------------------------------------------------
 .SUFFIXES: .cc .cpp .o .x
 #------------------------------------------------------
-$(EXE): $(OBJS)
+$(EXE): $(OBJS) $(LIBFILES)
 	$(CC) $(CFLAGS) $(INC_DIR) $(LIB_DIR) -o $(EXE) $(OBJS) $(LIBS)
 #------------------------------------------------------
 main.o:
@@ -24,7 +24,7 @@ main.o:
 all: $(EXE)
 #------------------------------------------------------
 run: all
-	./$(EXE) --load=hello_world.x
+	./$(EXE) --load=bitcount.x
 #------------------------------------------------------
 clean:
 	rm -f $(OBJS) $(EXE) *~ *.o
@@ -40,4 +40,4 @@ distclean: clean
 
 
 
-	
+
