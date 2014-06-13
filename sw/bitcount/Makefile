@@ -6,7 +6,7 @@ CC = mips-elf-gcc
 CFLAGS = -msoft-float -specs=archc
 LDFLAGS = -lm
 
-TARGET = hello_world.x
+TARGET = bitcount.x
 INC_DIR := -I.
 
 SRCS := bitcount.c
@@ -28,7 +28,7 @@ clean:
 distclean: clean
 #------------------------------------------------------
 bin:
-	tar xzf helloworld_bin.tgz
+	tar xzf bitcount_bin.tgz
 #------------------------------------------------------
 .c.o:
 	$(CC) -c $(CFLAGS) $(INC_DIR) -c $<
