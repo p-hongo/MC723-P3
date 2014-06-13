@@ -29,9 +29,9 @@ ac_tlm_rsp_status offload::writem( const uint32_t &a , const uint32_t &d )
       int global_x = be32toh(d);
       long local_x;
       int ans = 0;
-      printf("   offload>> numero a ser calculado: %d\n", global_x);
+      //printf("   offload>> numero a ser calculado: %d\n", global_x);
 
-      int LENGTH = 1;
+      int LENGTH = 2000000;
       for(j=0;j<LENGTH;j++){
           // different cpu processes a certain range of bits. i.e, cpu0 processes 1~16 bits, cpu1 processes 17~32 bits 
           local_x = global_x;
@@ -41,7 +41,7 @@ ac_tlm_rsp_status offload::writem( const uint32_t &a , const uint32_t &d )
               }while (0 != (local_x = local_x&(local_x-1))) ;
           }
       }
-      printf("   offload>> numero de bits: %d\n", ans);
+      //printf("   offload>> numero de bits: %d\n", ans);
       ans = htobe32(ans);
       *((uint32_t *) &memory[a]) = *((uint32_t *) &ans);     
   }
